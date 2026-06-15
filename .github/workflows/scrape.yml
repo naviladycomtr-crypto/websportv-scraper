@@ -1,0 +1,25 @@
+name: WebSportV Otomatik Mac Kaziyici
+
+on:
+  schedule:
+    # Türkiye saatiyle sabaha karşı 04:00 ve öğlen 12:00'de çalışır
+    - cron: '0 1,9 * * *'
+  workflow_dispatch: # İstediğimiz zaman elle de başlatabilmek için buton ekler
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodlari Klonla
+        uses: actions/checkout@v3
+
+      - name: Node.js Kurulumu
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Kutuphaneleri Yukle
+        run: npm install axios
+
+      - name: Botu Atesle
+        run: node scraper.js
